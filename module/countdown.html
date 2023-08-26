@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://ikkai.oss-cn-hangzhou.aliyuncs.com/resource/css/FZJuZhenXinFangS/FZJuZhenXinFangS.css">
+    <title>Timer from 20:34</title>
+</head>
+<body>
+    <style>
+        #timer {
+            font-family: 'FZJuZhenXinFangS-R-GB';
+        }
+    </style>
+
+    <div id="timer">距 23年8月26日 20:34 已过 0年0月0日 0:0:0</div>
+
+    <script>
+        function calculateTimePassed() {
+            const now = new Date();
+            const startTime = new Date(2023, 7, 26, 20, 34, 0);  // JavaScript months are 0-indexed, so 7 represents August.
+
+            if (now < startTime) {
+                document.getElementById("timer").innerText = "未到 23年8月26日 20:34";
+                return;
+            }
+
+            let years = now.getFullYear() - startTime.getFullYear();
+            let months = now.getMonth() - startTime.getMonth();
+            let days = now.getDate() - startTime.getDate();
+            let hours = now.getHours() - startTime.getHours();
+            let minutes = now.getMinutes() - startTime.getMinutes();
+            let seconds = now.getSeconds() - startTime.getSeconds();
+
+            if (seconds < 0) {
+                seconds += 60;
+                minutes--;
+            }
+
+            if (minutes < 0) {
+                minutes += 60;
+                hours--;
+            }
+
+            if (hours < 0) {
+                hours += 24;
+                days--;
+            }
+
+            if (days < 0) {
+                days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+                months--;
+            }
+
+            if (months < 0) {
+                months += 12;
+                years--;
+            }
+
+            document.getElementById("timer").innerText = `${years}年${months}月${days}日 ${hours}:${minutes}:${seconds}`;
+
+            setTimeout(calculateTimePassed, 1000); // Update every second
+        }
+
+        calculateTimePassed();
+    </script>
+</body>
+</html>
